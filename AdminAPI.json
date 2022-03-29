@@ -1,0 +1,576 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "AdminAPI",
+    "version": "1.0",
+    "description": "Admin API for API Serve",
+    "contact": {
+      "name": "Manish"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5001"
+    },
+    {
+      "url": "http://localhost:5002",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/v1/admin/datasourcelayer": {
+      "get": {
+        "summary": "Get Data Source layers",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DataLayerOnboard_Get"
+                  }
+                },
+                "examples": {
+                  "example-1": {
+                    "value": [
+                      {
+                        "datalayer_onboard_id": 0,
+                        "datalayer_name": "string",
+                        "datalayer_type": "string",
+                        "datalayer_connection_string": "string",
+                        "connection_additional_parameters": "string",
+                        "created_by": "string",
+                        "created_dt": "string",
+                        "active_flag": true
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-v1-admin-datasourcelayer",
+        "description": "Get data source layers details",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "default": "ALL"
+            },
+            "in": "query",
+            "name": "layername",
+            "required": true
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add Remove Data Source layers",
+        "operationId": "post-v1-admin-datasourcelayer",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "API to update the data source layer or add new",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataLayerOnboard_Insert"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "datalayer_onboard_id": 0,
+                    "datalayer_name": "string",
+                    "data_store_type": "string",
+                    "datalayer_connection_string": "string",
+                    "connection_additional_parameters": "string",
+                    "created_by": "string",
+                    "created_dt": "string",
+                    "active_flag": true
+                  }
+                }
+              }
+            },
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": ""
+        }
+      },
+      "delete": {
+        "summary": "Delete Data Source Layer",
+        "operationId": "delete-v1-admin-datasourcelayer",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "API to offboard the data source layer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "datalayer_name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-v1-admin-datasourcelayer",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "API to update the exisitng datasource layer",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DataLayerOnboard_Update"
+              },
+              "examples": {
+                "example-1": {
+                  "value": {
+                    "datalayer_name": "S3",
+                    "data_store_type": "S3",
+                    "datalayer_connection_string": "s3://",
+                    "connection_additional_parameters": "key",
+                    "active_flag": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/usermanage": {
+      "parameters": [],
+      "get": {
+        "summary": "Get User Info",
+        "tags": [],
+        "operationId": "get-v1-admin-usermanage",
+        "description": "Retrieve the information of the all users or for matching user ID.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "userorall"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                },
+                "examples": {
+                  "example-1": {
+                    "value": {
+                      "users": [
+                        {
+                          "id": 0,
+                          "firstName": "string",
+                          "lastName": "string",
+                          "email": "string",
+                          "usename": "string",
+                          "domains": [
+                            {}
+                          ],
+                          "userDataClassificationLevel": "string",
+                          "emailVerified": true,
+                          "password": "string",
+                          "accessValidTillDate": "string",
+                          "signUpDate": "string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Update/Revoke user",
+        "operationId": "post-v1-admin-usermanage",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "description": "API for updating the user details and revoking the same."
+      },
+      "delete": {
+        "summary": "Remove User",
+        "operationId": "delete-v1-admin-usermanage",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "API for removing the user"
+      }
+    },
+    "/v1/admin/domainmanage": {
+      "get": {
+        "summary": "Get Domain",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-admin-domainmanage",
+        "description": "API to get domain names"
+      },
+      "post": {
+        "summary": "Domain Update",
+        "operationId": "post-v1-admin-domainmanage",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Updated Domain information"
+      },
+      "delete": {
+        "summary": "Remove Domain",
+        "operationId": "delete-v1-admin-domainmanage",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "API for deleting existing domain"
+      },
+      "parameters": []
+    },
+    "/v1/admin/datarequest": {
+      "get": {
+        "summary": "Get Data Request details",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-admin-datarequest",
+        "description": "Get data request list"
+      },
+      "post": {
+        "summary": "Approve or Reject Data Request",
+        "operationId": "post-v1-admin-datarequest",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "API Approvto e or Reject data request"
+      },
+      "parameters": []
+    },
+    "/v1/admin/dataclassification/{layername}": {
+      "get": {
+        "summary": "Data Classification Update",
+        "tags": [],
+        "responses": {},
+        "operationId": "get-v1-admin-dataclassification",
+        "description": "Get the data classification details",
+        "parameters": []
+      },
+      "post": {
+        "summary": "Data Classification Update",
+        "operationId": "post-api-v1-admin-dataclassification",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "Update Data Classification"
+      },
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "layername",
+          "in": "path",
+          "required": true
+        }
+      ]
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "description": "",
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "uniqueItems": true,
+            "minItems": 1,
+            "items": {
+              "required": [
+                "id",
+                "firstName",
+                "lastName",
+                "email",
+                "usename",
+                "userDataClassificationLevel",
+                "emailVerified",
+                "password",
+                "accessValidTillDate",
+                "signUpDate"
+              ],
+              "properties": {
+                "id": {
+                  "type": "number"
+                },
+                "firstName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "lastName": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "email": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "usename": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "domains": {
+                  "type": "array",
+                  "items": {
+                    "required": [],
+                    "properties": {}
+                  }
+                },
+                "userDataClassificationLevel": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "emailVerified": {
+                  "type": "boolean"
+                },
+                "password": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "accessValidTillDate": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "signUpDate": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "users"
+        ],
+        "x-examples": {
+          "example-1": {
+            "users": [
+              {
+                "id": 142,
+                "firstName": "Alice",
+                "lastName": "Smith",
+                "email": "alice.smith@gmail.com",
+                "usename": "alice",
+                "domains": [
+                  "Retail",
+                  "Corporate"
+                ],
+                "userDataClassificationLevel": "Private",
+                "emailVerified": true,
+                "password": "alice",
+                "accessValidTillDate": "2022-12-31",
+                "signUpDate": "2019-08-24"
+              }
+            ]
+          }
+        }
+      },
+      "DataLayerOnboard_Insert": {
+        "title": "DataLayerOnboard_Insert",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "datalayer_onboard_id": 0,
+            "datalayer_name": "string",
+            "data_store_type": "string",
+            "datalayer_connection_string": "string",
+            "connection_additional_parameters": "string",
+            "created_by": "string",
+            "created_dt": "string",
+            "active_flag": true
+          }
+        },
+        "properties": {
+          "datalayer_onboard_id": {
+            "type": "integer"
+          },
+          "datalayer_name": {
+            "type": "string"
+          },
+          "data_store_type": {
+            "type": "string"
+          },
+          "datalayer_connection_string": {
+            "type": "string"
+          },
+          "connection_additional_parameters": {
+            "type": "string"
+          },
+          "active_flag": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "datalayer_name",
+          "data_store_type",
+          "datalayer_connection_string",
+          "active_flag"
+        ]
+      },
+      "DataLayerOnboard_Update": {
+        "title": "DataLayerOnboard_Update",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "datalayer_onboard_id": 0,
+            "datalayer_name": "string",
+            "data_store_type": "string",
+            "datalayer_connection_string": "string",
+            "connection_additional_parameters": "string",
+            "created_by": "string",
+            "created_dt": "string",
+            "active_flag": true
+          }
+        },
+        "description": "",
+        "properties": {
+          "datalayer_name": {
+            "type": "string"
+          },
+          "data_store_type": {
+            "type": "string"
+          },
+          "datalayer_connection_string": {
+            "type": "string"
+          },
+          "connection_additional_parameters": {
+            "type": "string"
+          },
+          "active_flag": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "datalayer_name",
+          "data_store_type",
+          "datalayer_connection_string",
+          "active_flag"
+        ]
+      },
+      "DataLayerOnboard_Get": {
+        "title": "DataLayerOnboard_Get",
+        "type": "object",
+        "x-examples": {
+          "example-1": {
+            "datalayer_onboard_id": 0,
+            "datalayer_name": "string",
+            "data_store_type": "string",
+            "datalayer_connection_string": "string",
+            "connection_additional_parameters": "string",
+            "created_by": "string",
+            "created_dt": "string",
+            "active_flag": true
+          }
+        },
+        "properties": {
+          "datalayer_onboard_id": {
+            "type": "integer"
+          },
+          "datalayer_name": {
+            "type": "string"
+          },
+          "data_store_type": {
+            "type": "string"
+          },
+          "datalayer_connection_string": {
+            "type": "string"
+          },
+          "connection_additional_parameters": {
+            "type": "string"
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "created_dt": {
+            "type": "string"
+          },
+          "active_flag": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "datalayer_name",
+          "data_store_type",
+          "datalayer_connection_string",
+          "active_flag"
+        ]
+      }
+    },
+    "requestBodies": {
+      "DataLayerOnboardInsert": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  }
+}
